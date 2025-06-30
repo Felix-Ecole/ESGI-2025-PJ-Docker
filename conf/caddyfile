@@ -1,0 +1,3 @@
+http://my-server.local {
+	reverse_proxy nginx1:80 nginx2:80
+}
