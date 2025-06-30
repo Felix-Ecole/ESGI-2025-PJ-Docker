@@ -1,0 +1,23 @@
+{
+	# documentation officiel → https://caddyserver.com/docs/caddyfile
+	# Global options → https://caddyserver.com/docs/caddyfile/options
+
+	# debug  # décommenter pour debug
+}
+
+# Redirection HTTP → HTTPS pour tous les sites.
+http:// {
+	redir https://{host}{uri} permanent
+}
+
+https://*.my-server.local my-server.local {
+
+	@loadbalance host my-server.local
+	reverse_proxy @loadbalance nginx1:80 nginx2:80
+
+	@prod1 host prod1.my-server.local
+	reverse_proxy @prod1 nginx1:80
+
+	@prod2 host prod2.my-server.local
+	reverse_proxy @prod2 nginx2:80
+}
